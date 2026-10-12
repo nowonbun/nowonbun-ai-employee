@@ -1,0 +1,24 @@
+{
+  "name": "ai-employee-system",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.web.json && esbuild web/app.ts --bundle --format=iife --target=es2022 --outfile=public/app.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.web.json",
+    "test": "node --import tsx --test test/*.test.ts",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "cron-parser": "5.10.1",
+    "zod": "4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "24.7.2",
+    "esbuild": "0.25.12",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3"
+  },
+  "engines": { "node": ">=24" }
+}

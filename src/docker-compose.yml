@@ -1,0 +1,20 @@
+services:
+  ai-employee:
+    build: .
+    init: true
+    env_file: ${ENV_FILE:-.env}
+    environment:
+      PORT: 3000
+      HOST: 0.0.0.0
+      DB_PATH: /data/ai-employee.sqlite
+      WORKSPACE_ROOT: /workspace
+      CODEX_HOME: /codex-home
+      LOG_SOURCE_ROOT: ${LOG_SOURCE_ROOT:-/codex-home/sessions}
+    ports:
+      - "127.0.0.1:${PORT:-3000}:3000"
+    volumes:
+      - "${WORKSPACE_HOST_PATH:?WORKSPACE_HOST_PATH is required}:/workspace:rw"
+      - "${CODEX_HOME_HOST:?CODEX_HOME_HOST is required}:/codex-home:rw"
+      - "${DATA_HOST_PATH:?DATA_HOST_PATH is required}:/data:rw"
+    restart: unless-stopped
+    stop_grace_period: 30s

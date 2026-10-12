@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 직원 시스템</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/style.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <button class="sidebar-overlay" id="sidebar-overlay" type="button" aria-label="메뉴 닫기"></button>
+    <aside class="sidebar" aria-label="탐색">
+      <div class="brand"><div class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div><div class="brand-name">employee<span>OS</span></div><small>AI 직원 팀</small></div></div>
+      <div class="workspace-pill"><span class="workspace-icon">W</span><span>내 작업 공간<small>AI 직원 작업 공간</small></span></div>
+      <p class="nav-caption">작업 공간</p>
+      <nav id="main-nav"></nav>
+      <div class="nav-separator"></div>
+      <p class="nav-caption">운영</p>
+      <nav id="operation-nav"></nav>
+      <div class="sidebar-bottom"><div class="environment-box"><span class="environment-dot"></span>로컬 운영 화면<small>실행 상태는 대시보드에서 확인</small></div><div class="account"><span class="avatar">ME</span><span><strong>작업 공간 관리자</strong><small>운영자</small></span></div></div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><div class="breadcrumbs"><button id="menu-toggle" class="icon-button" aria-label="메뉴 전환" aria-expanded="false">☰</button><span>작업 공간</span><span class="breadcrumb-slash">/</span><strong id="page-title">대시보드</strong></div><div class="top-actions"><span class="local-badge">LOCAL / SQLite</span><span class="top-divider"></span><button id="refresh" class="subtle">새로고침</button><button id="logout" class="subtle">잠금</button><span class="top-avatar" aria-label="관리자">ME</span></div></header>
+      <main id="app" tabindex="-1"></main>
+      <footer class="page-footer"><span>AI 직원 시스템 · 로컬 운영 화면</span><span>EMPLOYEE OS</span></footer>
+    </div>
+  </div>
+  <dialog id="login-dialog"><form method="dialog" id="login-form"><h2>관리자 토큰</h2><p>`.env`의 OPERATOR_TOKEN 을 입력하세요. 이 탭을 닫으면 삭제됩니다.</p><label>토큰<input id="operator-token" type="password" autocomplete="off" required></label><p id="login-error" class="error"></p><button class="primary" value="login">연결</button></form></dialog>
+  <dialog id="detail-dialog"><div class="dialog-head"><h2 id="detail-title"></h2><button id="detail-close" class="icon-button" aria-label="닫기">×</button></div><div id="detail-content"></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

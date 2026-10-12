@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>안내서 — Employee OS</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/guidebook.css">
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 이동</a>
+<aside class="sidebar" aria-label="안내서 목차">
+ <div class="sidebar-head"><div class="brand"><div class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div><strong>employee<span>OS</span></strong><small>AI 직원 팀</small></div></div><div class="sidebar-page"><p class="sidebar-page-title">가이드북</p><a class="back-link" href="/">← 작업 공간으로 돌아가기</a></div></div>
+ <div><p class="sidebar-title">목차</p><nav class="toc" aria-label="페이지 목차"><a href="#start">시작하기</a><a href="#workspace">작업 공간</a><a href="#operations">운영 메뉴</a><a href="#terms">자주 묻는 질문</a><a href="#limits">운영 범위</a></nav></div>
+ <div class="sidebar-note">로컬 운영 버전의 사용 안내입니다. 화면은 실제 저장 데이터와 실행 기록을 기준으로 합니다.</div>
+</aside>
+<div class="shell">
+ <header class="topbar"><div>작업 공간 <span aria-hidden="true">/</span> <strong>가이드북</strong></div><span class="pill">로컬 안내</span></header>
+ <main class="content" id="main">
+  <section class="hero" aria-labelledby="guide-title"><div><h1 id="guide-title">AI 직원 운영 안내서</h1><p>직원 설정부터 조직 배치, 관리 AI 업무 지시와 기록 확인까지 현재 운영 화면에서 사용할 수 있는 작업을 정리했습니다.</p></div><div class="hero-mark" aria-hidden="true">?</div></section>
+  <div class="notice"><strong>먼저 확인하세요:</strong> 이 화면은 프로토타입과 달리 실제 로컬 서비스를 안내합니다. 저장과 실행 요청은 서버의 데이터 및 Codex CLI 실행에 영향을 줄 수 있습니다.</div>
+
+  <section class="section" id="start" aria-labelledby="start-title"><div class="section-head"><div><h2 id="start-title">시작하기</h2><p>준비, 생성, 배치, 지시, 확인 순서로 진행하세요.</p></div><span class="section-count">5단계</span></div><div class="steps">
+   <article class="panel step"><span class="step-number">01</span><h3>기본 자료 준비</h3><p>필요하면 「스킬 등록」과 「페르소나 템플릿」에서 공통 설정을 준비하세요. Codex 인증은 서버의 CODEX_HOME에서 별도로 준비합니다.</p></article>
+   <article class="panel step"><span class="step-number">02</span><h3>AI 직원 생성</h3><p>이름·담당 업무·관리/실무 역할과 모델·페르소나·기본 스킬·작업 위치를 입력합니다. 첫 세션도 함께 생성됩니다.</p></article>
+   <article class="panel step"><span class="step-number">03</span><h3>조직에 배치</h3><p>조직 목록에서 조직도를 열고 미배정 AI 직원을 배치합니다. 직속 관계와 관리 AI의 호출 권한은 별도로 설정합니다.</p></article>
+   <article class="panel step"><span class="step-number">04</span><h3>업무 지시</h3><p>「업무 지시」에서 관리 AI에게 목적과 결과 보고 확인 항목을 등록합니다. 저장만으로 Task가 자동 생성되지는 않습니다.</p></article>
+   <article class="panel step"><span class="step-number">05</span><h3>기록 확인</h3><p>업무 지시 상태·결과 보고, Task 이력, 각 AI의 업무 일지, 세션 대화를 각각 확인합니다.</p></article>
+  </div></section>
+
+  <section class="section" id="workspace" aria-labelledby="workspace-title"><div class="section-head"><div><h2 id="workspace-title">작업 공간 화면</h2><p>직원·조직 설정과 업무 지시, AI 기록은 별도 화면입니다.</p></div><span class="section-count">일상 작업</span></div><div class="feature-grid">
+   <article class="panel feature"><h3><span>01</span>AI 직원</h3><p>AI 직원과 첫 세션을 함께 생성합니다. 세션 표시명은 실제 Codex 세션 ID와 다르며, 실제 ID는 CLI 실행 후 기록됩니다. 모델 변경은 다음 실행부터 적용됩니다.</p><div class="tag-row"><span class="tag">모델 변경</span><span class="tag">기본 페르소나</span><span class="tag">기본 스킬</span></div></article>
+   <article class="panel feature"><h3><span>02</span>조직·직원</h3><p>조직 목록에서 조직도를 열고 미배정 AI 직원을 배치합니다. 이미 배치된 직원을 중복 선택할 수 없습니다.</p><p>인사이동과 직속 관리 AI 지정은 호출 권한 부여와 별개입니다. 관리 AI별로 허용할 작업 AI를 명시적으로 설정하세요.</p></article>
+   <article class="panel feature"><h3><span>03</span>업무 지시</h3><p>사용자가 관리 AI에 요청하는 진입점입니다. 제목·요청 내용·결과 보고에서 확인할 사항을 등록하고 상태와 보고서를 확인합니다.</p><p>저장만으로 Task가 생성되지는 않습니다. 관리 AI의 수동 실행이나 일정이 별도로 필요합니다.</p></article>
+   <article class="panel feature"><h3><span>04</span>Task 이력·업무 일지</h3><p>끝이 정해진 Task의 진척도는 근거가 확인된 완료 조건의 가중치로 계산합니다. 계속 업무·정기 점검에는 전체 진척도 대신 실행 회차·미수행·파생 Task를 표시합니다.</p><p>업무 일지는 AI 직원이 자신의 작업 내용·근거·다음 행동을 남기는 기록입니다. 사용자 화면에서는 읽기 전용입니다.</p></article>
+   <article class="panel feature"><h3><span>05</span>세션 대화</h3><p>현재·과거 세션의 공개 대화 이벤트를 확인합니다. Runner 이벤트와 재색인한 Codex JSONL의 공개 메시지가 표시되며, 로그 형식이나 누락에 따라 전체 수집은 보장되지 않습니다.</p></article>
+   <article class="panel feature"><h3><span>06</span>1:1 면담</h3><p>관리 AI와 작업 AI 모두와 별도 면담 세션에서 대화할 수 있습니다. 면담 세션에는 업무용 System MCP를 전달하지 않습니다. 후속 업무는 「업무 지시」에서 관리 AI에게 요청하세요.</p></article>
+  </div></section>
+
+  <section class="section" id="operations" aria-labelledby="operations-title"><div class="section-head"><div><h2 id="operations-title">운영 메뉴</h2><p>설정과 실행 상태를 확인하는 영역입니다.</p></div><span class="section-count">실제 운영</span></div><div class="panel table-wrap"><table class="guide-table"><thead><tr><th scope="col">메뉴</th><th scope="col">가능한 작업</th><th scope="col">현재 버전의 범위</th></tr></thead><tbody>
+   <tr><td>관리 AI 일정</td><td>cron 식, 기본 프롬프트, 활성·중지 상태를 설정합니다.</td><td>저장된 일정은 서버 스케줄러에서 사용됩니다.</td></tr>
+   <tr><td>복구 센터</td><td>확인 필요 실행을 살펴보고 재개 후보를 관리합니다.</td><td>자동 재개는 기본적으로 꺼져 있습니다. 허용된 종료 코드와 정책을 설정한 경우에만 후보가 됩니다.</td></tr>
+   <tr><td>스킬 등록</td><td>직접 작성하거나 <code>SKILL.md</code> 파일을 불러와 등록합니다. <code>name</code>·<code>description</code>과 본문을 사용합니다.</td><td>DB에 저장되며, 기존 세션 설정과 실행 권한은 자동으로 바뀌지 않습니다.</td></tr>
+   <tr><td>페르소나 템플릿</td><td>공통 페르소나를 등록하고 AI 직원 생성 시 선택합니다.</td><td>선택한 내용이 세션 설정으로 복사됩니다.</td></tr>
+   <tr><td>환경 설정</td><td>Codex 로그 읽기 경로와 모델별 수동 요금을 설정합니다.</td><td>실행용 <code>CODEX_HOME</code>과 실행 제한은 <code>.env</code>에서 관리합니다. 요금은 실제 청구액이 아닙니다.</td></tr>
+   <tr><td>가이드북</td><td>이 사용 안내를 표시합니다.</td><td>이 페이지에서 설정을 변경하거나 실행하지 않습니다.</td></tr>
+  </tbody></table></div></section>
+
+  <section class="section" id="terms" aria-labelledby="terms-title"><div class="section-head"><div><h2 id="terms-title">자주 묻는 질문</h2><p>비슷한 항목의 역할을 구분합니다.</p></div></div><div class="panel faq">
+   <details><summary>AI 직원과 세션을 따로 만드나요?</summary><p>새 AI 직원을 만들 때 첫 세션도 함께 생성합니다. 조직 배치는 그다음에 진행합니다. 세션 표시명은 Codex가 발급하는 실제 세션 ID가 아닙니다.</p></details>
+   <details><summary>직속 관리 AI가 있으면 해당 직원을 호출할 수 있나요?</summary><p>아니요. 조직도의 직속 관계와 호출 권한은 별개입니다. 관리 AI에게 허용한 작업 AI만 호출할 수 있습니다.</p></details>
+   <details><summary>업무 지시를 저장하면 Task가 시작되나요?</summary><p>아니요. 업무 지시는 DB에 등록되지만, 저장만으로 Task가 생성되지는 않습니다. 관리 AI의 실행이나 일정이 별도로 필요합니다.</p></details>
+   <details><summary>업무 일지는 누구를 위한 기록인가요?</summary><p>기록한 AI 직원이 다음 실행에서 같은 작업을 이어가기 위한 진척 메모입니다. 작업 요약, 완료 사항, 근거, 미완료 항목과 다음 행동을 남깁니다.</p></details>
+   <details><summary>정기 점검에 전체 진척도가 없는 이유는 무엇인가요?</summary><p>종료 시점이 없어 완료 비율의 분모를 정할 수 없기 때문입니다. 대신 실행 회차와 미수행 상태, 파생된 미해결 Task, 다음 일정을 표시합니다.</p></details>
+   <details><summary>모델별 요금을 등록하면 청구액을 알 수 있나요?</summary><p>아니요. 현재는 수동 단가만 저장합니다. 토큰 사용량 수집, 비용 추정, 실제 청구 내역 대조는 구현되지 않았습니다.</p></details>
+  </div></section>
+
+  <section class="section" id="limits" aria-labelledby="limits-title"><div class="section-head"><div><h2 id="limits-title">운영 범위와 저장 위치</h2><p>실제 기록과 미구현 기능을 구분하세요.</p></div></div><div class="notice warn"><strong>미구현 범위:</strong> 예약 인사이동, 승인 기반 외부 쓰기, 다중 사용자 인증, 실제 요금 계산은 제공하지 않습니다. Codex CLI와 사내 이용 제한을 결합한 시험도 수행하지 않았습니다.</div><div class="notice"><strong>저장 위치:</strong> 운영 데이터의 기준 원본은 서버의 SQLite DB입니다. 브라우저를 닫아도 저장된 기록은 유지됩니다. 관리자 토큰은 이 탭의 세션 저장소에만 보관합니다.</div></section>
+  <footer class="footer"><span>EMPLOYEE OS · 로컬 안내</span><a href="/">작업 공간으로 돌아가기 →</a></footer>
+ </main>
+</div>
+</body>
+</html>
