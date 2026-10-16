@@ -4,7 +4,9 @@ export type Row = Record<string, string | number | null>;
 
 export function openDatabase(file: string): DatabaseSync {
   const db = new DatabaseSync(file);
-  db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;');
+  db.exec(
+    'PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;'
+  );
   db.exec(`
     CREATE TABLE IF NOT EXISTS employees (id TEXT PRIMARY KEY, name TEXT NOT NULL, responsibility TEXT NOT NULL, role TEXT NOT NULL CHECK(role IN ('manager','worker')), status TEXT NOT NULL DEFAULT 'active', org_id TEXT, supervisor_id TEXT, model TEXT NOT NULL, persona TEXT NOT NULL, skill_ids TEXT NOT NULL, cwd TEXT NOT NULL, revision INTEGER NOT NULL DEFAULT 1, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS sessions (id TEXT PRIMARY KEY, employee_id TEXT NOT NULL REFERENCES employees(id), label TEXT NOT NULL, codex_id TEXT UNIQUE, status TEXT NOT NULL, is_current INTEGER NOT NULL DEFAULT 1, model TEXT NOT NULL, persona TEXT NOT NULL, skill_ids TEXT NOT NULL, revision INTEGER NOT NULL DEFAULT 1, created_at INTEGER NOT NULL);
@@ -34,8 +36,27 @@ export function openDatabase(file: string): DatabaseSync {
     CREATE TABLE IF NOT EXISTS interview_messages (id TEXT PRIMARY KEY, interview_id TEXT NOT NULL REFERENCES interviews(id), actor TEXT NOT NULL, body TEXT NOT NULL, created_at INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS mcp_tokens (token_hash TEXT PRIMARY KEY, employee_id TEXT NOT NULL REFERENCES employees(id), expires_at INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS log_imports (source_key TEXT PRIMARY KEY, session_id TEXT NOT NULL REFERENCES sessions(id), created_at INTEGER NOT NULL);
+    CREATE TABLE IF NOT EXISTS ai_policy_versions (revision INTEGER PRIMARY KEY, skills_json TEXT NOT NULL, created_at INTEGER NOT NULL);
+    INSERT OR IGNORE INTO ai_policy_versions VALUES (1,'[]',0);
+    CREATE TABLE IF NOT EXISTS run_skill_snapshots (run_id TEXT PRIMARY KEY REFERENCES runs(id), policy_revision INTEGER NOT NULL, individual_revision INTEGER NOT NULL, skills_json TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS mcp_calls (sequence INTEGER PRIMARY KEY AUTOINCREMENT, call_id TEXT NOT NULL UNIQUE, employee_id TEXT NOT NULL, tool TEXT NOT NULL, target_id TEXT, occurred_at INTEGER NOT NULL, status TEXT NOT NULL, duration_ms REAL, error_code TEXT);
+    CREATE INDEX IF NOT EXISTS mcp_calls_period ON mcp_calls(occurred_at,sequence);
+    CREATE TABLE IF NOT EXISTS observability_meta (key TEXT PRIMARY KEY, started_at INTEGER NOT NULL);
+    INSERT OR IGNORE INTO observability_meta VALUES ('mcp', CAST(strftime('%s','now') AS INTEGER)*1000);
+    CREATE TABLE IF NOT EXISTS resource_archives (resource TEXT NOT NULL, target_id TEXT NOT NULL, archived_at INTEGER NOT NULL, PRIMARY KEY(resource,target_id));
+    CREATE TABLE IF NOT EXISTS maintenance_revisions (resource TEXT NOT NULL, target_id TEXT NOT NULL, revision INTEGER NOT NULL, PRIMARY KEY(resource,target_id));
+    CREATE TABLE IF NOT EXISTS skill_versions (skill_id TEXT NOT NULL REFERENCES skills(id), version INTEGER NOT NULL, name TEXT NOT NULL, description TEXT NOT NULL, content TEXT NOT NULL, sha256 TEXT NOT NULL, created_at INTEGER NOT NULL, PRIMARY KEY(skill_id,version));
+    INSERT OR IGNORE INTO skill_versions SELECT id,version,name,description,content,sha256,created_at FROM skills;
+    CREATE TABLE IF NOT EXISTS persona_versions (persona_id TEXT NOT NULL REFERENCES personas(id), version INTEGER NOT NULL, name TEXT NOT NULL, content TEXT NOT NULL, created_at INTEGER NOT NULL, PRIMARY KEY(persona_id,version));
+    INSERT OR IGNORE INTO persona_versions SELECT id,version,name,content,created_at FROM personas;
+    CREATE TABLE IF NOT EXISTS admin_operations (id TEXT PRIMARY KEY, tool TEXT NOT NULL, idem_key TEXT NOT NULL, payload_hash TEXT NOT NULL, status TEXT NOT NULL, result_json TEXT, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL, UNIQUE(tool,idem_key));
   `);
-  const interviewColumns = db.prepare('PRAGMA table_info(interviews)').all() as { name: string }[];
-  if (!interviewColumns.some(column => column.name === 'session_id')) db.exec('ALTER TABLE interviews ADD COLUMN session_id TEXT REFERENCES sessions(id)');
+  const interviewColumns = db
+    .prepare('PRAGMA table_info(interviews)')
+    .all() as { name: string }[];
+  if (!interviewColumns.some((column) => column.name === 'session_id'))
+    db.exec(
+      'ALTER TABLE interviews ADD COLUMN session_id TEXT REFERENCES sessions(id)'
+    );
   return db;
 }

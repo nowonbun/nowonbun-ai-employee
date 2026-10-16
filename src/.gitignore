@@ -3,4 +3,5 @@ dist/
 public/app.js
 .env
 data/
+workspace/
 *.sqlite*
